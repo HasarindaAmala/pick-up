@@ -10,8 +10,10 @@ class ConfirmInterface extends StatefulWidget {
 }
 
 class _ConfirmInterfaceState extends State<ConfirmInterface> {
-  bool pickUp=false;
-  bool shedule=true;
+  bool pickUp=true;
+  bool shedule=false;
+  bool notToday=false;
+  bool ready=true;
   String Time = '7.00 A.M';
 
   @override
@@ -190,25 +192,69 @@ class _ConfirmInterfaceState extends State<ConfirmInterface> {
 
                       ],
                     ),
-                    SizedBox(height: height*0.01,),
+                    SizedBox(height: height*0.008,),
                     Row(
                       children: [
                         SizedBox(width: width*0.04,),
-                        Container(
-                          width: width*0.11,
-                          height: width*0.11,
-                          decoration: BoxDecoration(
+                        GestureDetector(
+                          onTap: (){
+                            setState(() {
+                              ready=true;
+                              notToday=false;
+                            });
+                          },
+                          child: Container(
+                            width: width*0.14,
+                            height: width*0.14,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(image: AssetImage('assets/images/yesDog.jpg'),fit: BoxFit.cover,),
+                                borderRadius: BorderRadius.circular(width*0.3),
+                                border: Border.all(width: 3.0,color: ready? Colors.green:Colors.grey,),
+                                color: Colors.white
+                            ),
 
-
-                              borderRadius: BorderRadius.circular(width*0.3),
-                              border: Border.all(width: 2.0,color: Colors.black87),
-                              color: Colors.white
                           ),
-
                         ),
-                        SizedBox(width: width*0.02,height: 0.1,),
+                        SizedBox(width: width*0.06,height: 0.1,),
+                        GestureDetector(
+                          onTap: (){
+                            setState(() {
+                              notToday=true;
+                              ready=false;
+                            });
+                          },
+                          child: Container(
+                            width: width*0.14,
+                            height: width*0.14,
+                            decoration: BoxDecoration(
+                                image: DecorationImage(image: AssetImage('assets/images/noDog.jpg'),fit: BoxFit.cover,),
+                                borderRadius: BorderRadius.circular(width*0.3),
+                                border: Border.all(width: 3.0,color: notToday? Colors.green : Colors.grey),
+                                color: Colors.white
+                            ),
+
+                          ),
+                        ),
+                        SizedBox(width: width*0.3,height: 0.1,),
+                        ElevatedButton(onPressed: (){}, child: Icon(Icons.arrow_forward,color: Colors.white,),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.greenAccent,
+                          elevation: width*0.01,
+                        ),
+                        ),
 
                       ],
+                    ),
+                    SizedBox(width: width*0.3,height: height*0.008,),
+
+                    Row(
+                      children: [
+                        SizedBox(width: width*0.06,),
+                        Text("I'm ready",style: TextStyle(fontWeight: FontWeight.bold,fontSize: width*0.025,color: ready? Colors.green:Colors.grey,),),
+                        SizedBox(width: width*0.08,),
+                        Text('Not Today',style: TextStyle(fontWeight: FontWeight.bold,fontSize: width*0.025,color: notToday? Colors.green:Colors.grey,),),
+                      ],
+
                     ),
 
                   ],

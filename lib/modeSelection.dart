@@ -38,7 +38,7 @@ class _ModeSelectionState extends State<ModeSelection> {
           children: [
             Positioned(
                 top: height*0.27,
-                left: height*0.03,
+                left: width*0.05,
                 child: Container(
                   width: width*0.39,
                   height: height*0.4,
@@ -47,7 +47,7 @@ class _ModeSelectionState extends State<ModeSelection> {
             ),
             Positioned(
                 top: height*0.27,
-                left: height*0.33,
+                left: width*0.56,
                 child: Container(
                   width: width*0.39,
                   height: height*0.4,
@@ -79,7 +79,7 @@ class _ModeSelectionState extends State<ModeSelection> {
             ),
             Positioned(
                 top: height*0.3,
-                left: height*0.302,
+                left: width*0.502,
                 child: GestureDetector(
                   onTap: (){
                     Navigator.push(
@@ -98,7 +98,7 @@ class _ModeSelectionState extends State<ModeSelection> {
 
                     width: width*0.5,
                     height: height*0.3,
-                    decoration: BoxDecoration(color: Colors.teal,border: Border.all(width: 3.0,color: Colors.grey)),
+                    decoration: BoxDecoration(color: Color(0xFF88D6B0),border: Border.all(width: 3.0,color: Colors.grey)),
                   ),
                 )
             ),

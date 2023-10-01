@@ -1,5 +1,9 @@
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:pickup_test/DriverInterface.dart';
+import 'package:pickup_test/DriverSignUp.dart';
+import 'package:pickup_test/firebase_auth.dart';
 
 class DriverLogin extends StatefulWidget {
   const DriverLogin({Key? key}) : super(key: key);
@@ -9,6 +13,17 @@ class DriverLogin extends StatefulWidget {
 }
 
 class _DriverLoginState extends State<DriverLogin> {
+
+  final FirebaseAuthService _auth = FirebaseAuthService();
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    usernameController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
@@ -60,7 +75,7 @@ class _DriverLoginState extends State<DriverLogin> {
                         child: Container(
                           width: width*0.8,
                           child: TextFormField(                                    //user name
-                            //controller: usernameController,
+                            controller: usernameController,
                             style: const TextStyle(color: Colors.white),
                             cursorColor: Colors.white,
                             decoration: InputDecoration(
@@ -104,7 +119,7 @@ class _DriverLoginState extends State<DriverLogin> {
                         child: Container(
                           width: width*0.8,
                           child: TextFormField(            //password
-                            //controller: usernameController,
+                            controller: passwordController,
                             style: const TextStyle(color: Colors.white),
                             cursorColor: Colors.white,
                             decoration: InputDecoration(
@@ -192,13 +207,31 @@ class _DriverLoginState extends State<DriverLogin> {
               top: height*0.65,
                 left: width*0.4,
                 child: ElevatedButton(
-                  onPressed: (){},
+                  onPressed: signIn,
                   style: ElevatedButton.styleFrom(
 
 
                   ),
                   child: Icon(Icons.arrow_forward,color: Colors.black,),
                 ),
+            ),
+            Positioned(
+              top: height*0.6,
+              left: width*0.68,
+              child: GestureDetector(
+                onTap: (){
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const DriverSignUp()
+                    ),
+                  );
+                },
+                child: Text(
+                  'SIGN UP',style: TextStyle(color: Colors.white,fontSize: width*0.04,fontWeight: FontWeight.bold,decoration: TextDecoration.underline,),
+                ),
+              )
+
             )
 
 
@@ -207,5 +240,31 @@ class _DriverLoginState extends State<DriverLogin> {
         ),
       ),
     );
+  }
+
+  void signIn() async{
+
+    String email = usernameController.text;
+    String password = passwordController.text;
+
+    User? user = await _auth.SignIn(email, password);
+
+    if(user != null){
+      print("succesfully signedIn");
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => const driverInterface(),
+        ),
+      );
+
+    }else{
+      print("some error occured!");
+    }
+
+
+
+
+
   }
 }
