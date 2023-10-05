@@ -1,9 +1,14 @@
 
 
+//import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:pickup_test/waiting.dart';
 
 class ConfirmInterface extends StatefulWidget {
-  const ConfirmInterface({Key? key}) : super(key: key);
+  String data;
+ ConfirmInterface({Key? key,required this.data}) : super(key: key);
+
 
   @override
   State<ConfirmInterface> createState() => _ConfirmInterfaceState();
@@ -15,6 +20,21 @@ class _ConfirmInterfaceState extends State<ConfirmInterface> {
   bool notToday=false;
   bool ready=true;
   String Time = '7.00 A.M';
+  DatabaseReference _ref = FirebaseDatabase.instance.ref();
+
+  void sendDataToDatabase(String data1, String data2) {
+    // Update the reference to the "user" node
+    DatabaseReference userRef = _ref.child('user').push();
+
+    // Use the set method to update data1, data2, and data3
+    userRef.set({
+      'username': data1,
+      'Attendence': data2,
+
+    });
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +42,7 @@ class _ConfirmInterfaceState extends State<ConfirmInterface> {
     final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
     return Scaffold(
+
 
       appBar: AppBar(
         centerTitle: true,
@@ -236,7 +257,26 @@ class _ConfirmInterfaceState extends State<ConfirmInterface> {
                           ),
                         ),
                         SizedBox(width: width*0.3,height: 0.1,),
-                        ElevatedButton(onPressed: (){}, child: Icon(Icons.arrow_forward,color: Colors.white,),
+                        ElevatedButton(onPressed: () {
+                          // _ref.child('user').set({
+                          //   '${widget.data}',
+                          setState(() {
+                            sendDataToDatabase('${widget.data}', ready.toString(), );
+                          });
+
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>  waitingScreen( name: '${widget.data}'),
+                            ),
+                          );
+
+
+
+
+                         // createuser(Attendence: ready,name: '${widget.data}');
+                          //print( );
+                        }, child: Icon(Icons.arrow_forward,color: Colors.white,),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.greenAccent,
                           elevation: width*0.01,
@@ -281,4 +321,12 @@ class _ConfirmInterfaceState extends State<ConfirmInterface> {
       ),
     );
   }
+  // Future createuser({required bool Attendence,required String name}) async {
+  //   final docuser = FirebaseFirestore.instance.collection("Passengers").doc("my-Id");
+  //   final json ={
+  //     'name' : name,
+  //     'attendence' : Attendence,
+  //   };
+  // await docuser.set(json);
+  // }
 }
