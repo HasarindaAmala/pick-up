@@ -17,6 +17,7 @@ class _DriverLoginState extends State<DriverLogin> {
   final FirebaseAuthService _auth = FirebaseAuthService();
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  bool correct = true;
 
   @override
   void dispose() {
@@ -26,6 +27,7 @@ class _DriverLoginState extends State<DriverLogin> {
   }
   @override
   Widget build(BuildContext context) {
+    correct;
     final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -73,6 +75,7 @@ class _DriverLoginState extends State<DriverLogin> {
                     Positioned(
 
                         child: Container(
+
                           width: width*0.8,
                           child: TextFormField(                                    //user name
                             controller: usernameController,
@@ -84,6 +87,7 @@ class _DriverLoginState extends State<DriverLogin> {
                               prefixIcon: const Icon(
                                 Icons.supervised_user_circle_outlined,
                                 color: Colors.white,
+
                               ),
                               suffixIcon: const Icon(
                                 Icons.pending_actions,
@@ -210,7 +214,6 @@ class _DriverLoginState extends State<DriverLogin> {
                   onPressed: signIn,
                   style: ElevatedButton.styleFrom(
 
-
                   ),
                   child: Icon(Icons.arrow_forward,color: Colors.black,),
                 ),
@@ -244,7 +247,7 @@ class _DriverLoginState extends State<DriverLogin> {
 
   void signIn() async{
 
-    String email = usernameController.text;
+    String email = usernameController.text+"Driver";
     String password = passwordController.text;
 
     User? user = await _auth.SignIn(email, password);
@@ -259,6 +262,9 @@ class _DriverLoginState extends State<DriverLogin> {
       );
 
     }else{
+      setState(() {
+        correct = false;
+      });
       print("some error occured!");
     }
 

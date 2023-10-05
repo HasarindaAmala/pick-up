@@ -16,6 +16,7 @@ class _DriverSignUpState extends State<DriverSignUp> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
+
   @override
   void dispose() {
     usernameController.dispose();
@@ -27,6 +28,7 @@ class _DriverSignUpState extends State<DriverSignUp> {
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
+
     return Scaffold(
       body: SizedBox(
         width: width,
@@ -86,26 +88,26 @@ class _DriverSignUpState extends State<DriverSignUp> {
                           width: width*0.8,
                           child: TextFormField(                                    //user name
                             controller: usernameController,
-                            style: const TextStyle(color: Colors.grey),
-                            cursorColor: Colors.grey,
+                            style: const TextStyle(color: Colors.black45),
+                            cursorColor: Colors.black45,
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: Colors.grey.withOpacity(0.1),
                               prefixIcon: const Icon(
                                 Icons.supervised_user_circle_outlined,
-                                color: Colors.grey,
+                                color: Colors.black45,
                               ),
                               suffixIcon: const Icon(
                                 Icons.pending_actions,
-                                color: Colors.grey,
+                                color: Colors.black45,
                               ),
                               hintText: 'Enter ID',
-                              hintStyle: const TextStyle(color: Colors.grey),
+                              hintStyle: const TextStyle(color: Colors.black45),
                               labelText: 'Driver ID',
-                              labelStyle: const TextStyle(color: Colors.grey,fontWeight: FontWeight.bold),
+                              labelStyle: const TextStyle(color: Colors.black45,fontWeight: FontWeight.bold),
                               enabledBorder: const OutlineInputBorder(
                                 borderSide: BorderSide(
-                                  color: Colors.grey,
+                                  color: Colors.black45,
                                 ),
                                 borderRadius: BorderRadius.all(Radius.circular(10.0)),
                               ),
@@ -130,26 +132,26 @@ class _DriverSignUpState extends State<DriverSignUp> {
                           width: width*0.8,
                           child: TextFormField(            //password
                             controller: passwordController,
-                            style: const TextStyle(color: Colors.grey,),
-                            cursorColor: Colors.grey,
+                            style: const TextStyle(color: Colors.black45,),
+                            cursorColor: Colors.black45,
                             decoration: InputDecoration(
                               filled: true,
-                              fillColor: Colors.grey.withOpacity(0.1),
+                              fillColor: Colors.black45.withOpacity(0.1),
                               prefixIcon: const Icon(
                                 Icons.supervised_user_circle_outlined,
-                                color: Colors.grey,
+                                color: Colors.black45,
                               ),
                               suffixIcon: const Icon(
                                 Icons.pending_actions,
-                                color: Colors.grey,
+                                color: Colors.black45,
                               ),
                               hintText: 'Enter Password',
-                              hintStyle: const TextStyle(color: Colors.grey),
+                              hintStyle: const TextStyle(color: Colors.black45),
                               labelText:'Password',
-                              labelStyle: const TextStyle(color: Colors.grey,fontWeight: FontWeight.bold),
+                              labelStyle: const TextStyle(color: Colors.black45,fontWeight: FontWeight.bold),
                               enabledBorder: const OutlineInputBorder(
                                 borderSide: BorderSide(
-                                  color: Colors.grey,
+                                  color: Colors.black45,
                                 ),
                                 borderRadius: BorderRadius.all(Radius.circular(10.0)),
                               ),
@@ -238,7 +240,14 @@ class _DriverSignUpState extends State<DriverSignUp> {
                 top: height*0.82,
                 left: width*0.59,
                 child: GestureDetector(
-                    onTap: (){},
+                    onTap: (){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const DriverLogin()
+                        ),
+                      );
+                    },
                     child: Text("Sign In",style: TextStyle(color: Colors.blueAccent,fontSize: width*0.04,fontWeight: FontWeight.bold,),)),
               ),
 
@@ -253,7 +262,7 @@ class _DriverSignUpState extends State<DriverSignUp> {
 
   void signUp() async{
 
-    String email = usernameController.text;
+    String email = usernameController.text+"Driver";
     String password = passwordController.text;
 
     User? user = await _auth.SignUp(email, password);
@@ -268,6 +277,8 @@ class _DriverSignUpState extends State<DriverSignUp> {
      );
 
     }else{
+
+
       print("some error occured!");
 
     }
